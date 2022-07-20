@@ -10,63 +10,85 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const Register = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [phone, setPhone] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
   return (
     <KeyboardAvoidingView>
-      <View
-        style={{
-          backgroundColor: "#fff",
-          height: "100%",
-        }}
-      >
+      <ImageBackground source={require("../../assets/bgPic.png")}>
         <View
           style={{
-            alignItems: "center",
-            flex: 0.5,
-            justifyContent: "center",
+            backgroundColor: "#fff",
+            height: "100%",
           }}
         >
-          <Image source={require("../../assets/kfitLogo.png")} />
+          <View
+            style={{
+              alignItems: "center",
+              flex: 0.5,
+              justifyContent: "center",
+            }}
+          >
+            <Image source={require("../../assets/kfitLogo.png")} />
+          </View>
+          <ScrollView
+            style={styles.formContainer}
+            contentContainerStyle={styles.center}
+          >
+            <View>
+              <Text styles={styles.inputText}>NAME :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(name) => setName(name)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>AGE :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(age) => setAge(age)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>PHONE :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(phone) => setPhone(phone)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>HEIGHT :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(height) => setHeight(height)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>WEIGHT :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(weight) => setWeight(weight)}
+              />
+            </View>
+          </ScrollView>
+          <View
+            style={{
+              flex: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.loginText}>Register</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <ScrollView
-          style={styles.formContainer}
-          contentContainerStyle={styles.center}
-        >
-          <View>
-            <Text styles={styles.inputText}>NAME :</Text>
-            <TextInput style={styles.inputContainer} />
-          </View>
-          <View>
-            <Text styles={styles.inputText}>AGE :</Text>
-            <TextInput style={styles.inputContainer} />
-          </View>
-          <View>
-            <Text styles={styles.inputText}>PHONE :</Text>
-            <TextInput style={styles.inputContainer} />
-          </View>
-          <View>
-            <Text styles={styles.inputText}>HEIGHT :</Text>
-            <TextInput style={styles.inputContainer} />
-          </View>
-          <View>
-            <Text styles={styles.inputText}>WEIGHT :</Text>
-            <TextInput style={styles.inputContainer} />
-          </View>
-        </ScrollView>
-        <View
-          style={{
-            flex: 0.5,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginText}>Register</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
@@ -89,6 +111,7 @@ const styles = StyleSheet.create({
     width: 270,
     height: 40,
     marginTop: 10,
+    padding: 10,
   },
   inputText: {
     fontSize: 16,

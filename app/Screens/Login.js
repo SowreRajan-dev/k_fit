@@ -4,16 +4,17 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  Dimensions,
-  Button,
-  Pressable,
   ImageBackground,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <>
       <KeyboardAvoidingView
@@ -31,21 +32,24 @@ const Login = ({ navigation }) => {
             <Image source={require("../../assets/kfitLogo.png")} />
           </View>
           <KeyboardAvoidingView style={styles.formContainer}>
-            <View>
+            <ScrollView contentContainerStyle={styles.center}>
               <TextInput
                 placeholder="Username"
                 placeholderTextColor={"#6327FF"}
                 style={styles.textInputBox}
+                onChangeText={(email) => setEmail(email)}
               />
               <TextInput
                 placeholder="Password"
                 style={styles.textInputBox}
                 placeholderTextColor={"#6327FF"}
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)}
               />
               <View>
                 <Text style={styles.forgetPassword}>Forget Password?</Text>
               </View>
-            </View>
+            </ScrollView>
           </KeyboardAvoidingView>
           <View
             style={{
@@ -92,6 +96,10 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   logoContainer: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  center: {
     alignItems: "center",
     justifyContent: "center",
   },
