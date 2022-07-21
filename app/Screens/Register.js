@@ -8,16 +8,74 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   SafeAreaView,
+  ToastAndroid,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import { StackActions } from "@react-navigation/native";
 
+import React, { useState } from "react";
+import firebase from "../../firebase";
 const Register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [phone, setPhone] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+
+  const registerUser = async () => {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !confirmpassword ||
+      !phone ||
+      !weight ||
+      !height ||
+      !age
+    ) {
+      console.log("Enter all details");
+      return;
+    }
+    try {
+      console.log("entering user");
+      const user = {
+        name,
+        email,
+        password,
+        phone,
+        weight,
+        height,
+        age,
+      };
+      if (!(password === confirmpassword)) {
+        console.log("password and confirm password are not same");
+        return;
+      }
+
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((newUser) => {
+          console.log(newUser.user);
+          firebase
+            .firestore()
+            .collection("User")
+            .doc(newUser.user.uid)
+            .set(user);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.error("error", err);
+    }
+    console.log("now pushing");
+    navigation.push("Login");
+  };
+
   return (
     <KeyboardAvoidingView>
       <ImageBackground source={require("../../assets/bgPic.png")}>
@@ -48,6 +106,27 @@ const Register = ({ navigation }) => {
               />
             </View>
             <View>
+              <Text styles={styles.inputText}>EMAIL :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(email) => setEmail(email)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>PASSWORD :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(password) => setPassword(password)}
+              />
+            </View>
+            <View>
+              <Text styles={styles.inputText}>CONFIRM PASSWORD :</Text>
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={(password) => setConfirmPassword(password)}
+              />
+            </View>
+            <View>
               <Text styles={styles.inputText}>AGE :</Text>
               <TextInput
                 style={styles.inputContainer}
@@ -59,6 +138,7 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.inputContainer}
                 onChangeText={(phone) => setPhone(phone)}
+                maxLength={10}
               />
             </View>
             <View>
@@ -83,9 +163,35 @@ const Register = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={registerUser}>
               <Text style={styles.loginText}>Register</Text>
             </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              flex: 0.5,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "600",
+              }}
+            >
+              Already a user?{" "}
+              <Text
+                style={{
+                  color: "#6327FF",
+                  fontSize: 18,
+                  fontWeight: "600",
+                }}
+                onPress={() => navigation.navigate("Login")}
+              >
+                Sign In
+              </Text>
+            </Text>
           </View>
         </View>
       </ImageBackground>
