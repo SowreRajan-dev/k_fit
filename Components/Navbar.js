@@ -8,8 +8,9 @@ import {
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { navigate } from "../helpers/RootNavigation";
+import { StackActions } from "@react-navigation/native";
 
-const Navbar = () => {
+const Navbar = ({ navigation }) => {
   return (
     <View
       style={{
@@ -46,7 +47,7 @@ const Navbar = () => {
           style={{
             borderRadius: 50,
           }}
-          onPress={() => navigate("Profile")}
+          onPress={() => navigation.navigate("Profile")}
         >
           <View
             style={{

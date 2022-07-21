@@ -8,16 +8,12 @@ export default function Home({ navigation }) {
   return (
     <ScrollView>
       <View style={{ backgroundColor: "#E5E5E5" }}>
-        <Navbar />
+        <Navbar navigation={navigation} />
         <View>
           <ProgressBar />
           <Button
             title="Go to login page"
             onPress={() => navigation.navigate("Login")}
-          />
-          <Button
-            title="Go to Profile page"
-            onPress={() => navigation.navigate("Profile")}
           />
         </View>
         <View style={styles.cardContainer}>

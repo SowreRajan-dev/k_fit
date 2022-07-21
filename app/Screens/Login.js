@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  0;
   return (
     <>
       <KeyboardAvoidingView
@@ -34,7 +34,7 @@ const Login = ({ navigation }) => {
           <KeyboardAvoidingView style={styles.formContainer}>
             <ScrollView contentContainerStyle={styles.center}>
               <TextInput
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor={"#6327FF"}
                 style={styles.textInputBox}
                 onChangeText={(email) => setEmail(email)}

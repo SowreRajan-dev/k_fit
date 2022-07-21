@@ -15,6 +15,7 @@ const RateCards = ({ title, pastDaysCount, typeOfCard, values }) => {
         padding: 10,
         backgroundColor: "white",
         borderRadius: 20,
+        position: "relative",
       }}
     >
       <View style={styles.valueContainer}>
@@ -67,6 +68,7 @@ const RateCards = ({ title, pastDaysCount, typeOfCard, values }) => {
           alignItems: "center",
           justifyContent: "center",
           marginLeft: 10,
+          position: "absolute",
         }}
       >
         <VerticalBarGraph
@@ -96,9 +98,11 @@ const styles = StyleSheet.create({
   chart: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
+
     paddingTop: 20,
     borderRadius: 20,
     width: 240,
+    left: 70,
+    bottom: 0,
   },
 });
