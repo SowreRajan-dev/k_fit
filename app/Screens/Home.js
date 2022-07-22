@@ -11,10 +11,6 @@ export default function Home({ navigation }) {
         <Navbar navigation={navigation} />
         <View>
           <ProgressBar />
-          <Button
-            title="Go to login page"
-            onPress={() => navigation.navigate("Login")}
-          />
         </View>
         <View style={styles.cardContainer}>
           <View>
@@ -50,5 +46,6 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   cardContainer: {
     marginLeft: 20,
+    marginTop: 20,
   },
 });

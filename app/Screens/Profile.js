@@ -1,7 +1,31 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import firebase from "../../firebase";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+  const getProfile = async () => {
+    const currUser = await firebase.auth().currentUser.uid;
+    console.log(currUser);
+    await firebase.firestore().collection("User").doc(currUser).get();
+  };
+
+  const onSignOut = async () => {
+    try {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => console.log("User signed out!"));
+    } catch (err) {
+      console.error(err);
+    }
+    console.log("pushing in");
+    navigation.push("Login");
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <View
       style={{
@@ -57,11 +81,25 @@ const Profile = () => {
           <Text style={styles.profileTitles}>Phone:</Text> 9656874123
         </Text>
         <Text>
-          <Text style={styles.profileTitles}>Height:</Text> 158
+          <Text style={styles.profileTitles}>Height:</Text> 158 cm
         </Text>
         <Text>
-          <Text style={styles.profileTitles}>Weight:</Text> 55
+          <Text style={styles.profileTitles}>Weight:</Text> 55 kg
         </Text>
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 10,
+            elevation: 3,
+            backgroundColor: "#6327FF",
+            width: 160,
+            height: 50,
+          }}
+          onPress={onSignOut}
+        >
+          <Text style={{ color: "white", fontSize: 14 }}>Sign out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

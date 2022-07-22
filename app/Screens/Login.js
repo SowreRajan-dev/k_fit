@@ -9,12 +9,36 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
+import firebase from "../../firebase";
+
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  0;
+  const loginUser = async () => {
+    if (!email && !password) {
+      console.log("Enter all values");
+    }
+    try {
+      console.log("trying.....");
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+          console.log("Signed in successfully : ", user);
+          if (user) {
+            navigation.push("Home");
+          }
+        })
+        .catch((error) => {
+          console.log("error : ", error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <KeyboardAvoidingView
@@ -58,7 +82,7 @@ const Login = ({ navigation }) => {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={loginUser}>
               <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
           </View>

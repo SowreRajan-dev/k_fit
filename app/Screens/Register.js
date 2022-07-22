@@ -55,20 +55,11 @@ const Register = ({ navigation }) => {
         return;
       }
 
-      await firebase
+      const { uid } = firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((newUser) => {
-          console.log(newUser.user);
-          firebase
-            .firestore()
-            .collection("User")
-            .doc(newUser.user.uid)
-            .set(user);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+        .createUserWithEmailAndPassword(email, password);
+
+      await firebase.firestore().collection("User").doc(uid).set(user);
     } catch (err) {
       console.error("error", err);
     }
@@ -138,7 +129,6 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.inputContainer}
                 onChangeText={(phone) => setPhone(phone)}
-                maxLength={10}
               />
             </View>
             <View>
